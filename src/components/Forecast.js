@@ -29,7 +29,7 @@ class Forecast extends React.Component {
     e.preventDefault();
 
     if (this.state.cityName === "" && !navigator.geolocation) {
-      console.error("Please enter a city.");
+      console.log("debug pin");
     } else if (this.state.cityName.length !== 0) {
       this.setState({ loading: true });
       console.log(this.state.loading);
@@ -86,9 +86,15 @@ class Forecast extends React.Component {
         <div style={{ textAlign: "center" }}>
           <Grid container spacing={3}>
             <Grid item xs={6}>
-              <h3 style={{ marginBottom: "-15px" }}>
+              <p
+                style={{
+                  marginBottom: "-30px",
+                  fontFamily: "IBM Plex Serif",
+                  fontSize: "20px"
+                }}
+              >
                 Search for a city or enable location!
-              </h3>
+              </p>
               <form onSubmit={this.onSubmit} style={{ marginTop: "5%" }}>
                 <TextField
                   id="outlined-basic"
@@ -108,12 +114,7 @@ class Forecast extends React.Component {
 
                 <br />
                 <br />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="medium"
-                  type="submit"
-                >
+                <Button variant="outlined" size="medium" type="submit">
                   >>
                 </Button>
               </form>
@@ -121,8 +122,8 @@ class Forecast extends React.Component {
             </Grid>
             <Grid item xs={6}>
               {Object.entries(this.state.weatherInfo).length !== 0 ? (
-                <div>
-                  <h1>
+                <div style={{ marginRight: "30%" }}>
+                  <h1 style={{ marginBottom: "-5%" }}>
                     {name}, {sys.country} <br />
                     <br />
                   </h1>
@@ -144,7 +145,7 @@ class Forecast extends React.Component {
                   <h4>{parseFloat(main.feels_like - 273.15).toFixed(0)}°C</h4>
                   <p>Low/High:</p>
                   <h4>
-                    {parseFloat(main.temp_min - 273.15).toFixed(0)}/
+                    {parseFloat(main.temp_min - 273.15).toFixed(0)}°C/
                     {parseFloat(main.temp_max - 273.15).toFixed(0)}°C
                   </h4>
                   {/* <WeeklyForecast city={name} country={sys.country} /> */}
