@@ -5,6 +5,9 @@ This application is a weather forecaster which leverages Open Weather Map's API 
 
 # To run application
 1. Clone application using git clone cli. 
-2. Run 'npm install' to install all the dependencies. 
-3. Run 'npm start' in the application directory. 
-4. Enjoy! 
+2. Create an account on https://openweathermap.org/ and copy your API key.
+3. Create a '.env' file and store the API key in a variable called 'REACT_APP_OWM_API_KEY'.
+4. Run 'npm install' to install all the dependencies. 
+5. Run 'npm start' in the application directory. 
+6. Enjoy! 
+
