@@ -3,15 +3,22 @@ import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import OrbitSpinner from "@bit/bondz.react-epic-spinners.orbit-spinner";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 
 import "../css/weather-icons.css";
-import AnalogClock from "../components/AnalogClock";
+//import AnalogClock from "../components/AnalogClock";
 
 class Forecast extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { cityName: "", weatherInfo: [], long: "", lat: "" };
+    this.state = {
+      cityName: "",
+      weatherInfo: [],
+      long: "",
+      lat: "",
+      loading: false
+    };
   }
 
   onChange = e => {
@@ -24,6 +31,8 @@ class Forecast extends React.Component {
     if (this.state.cityName === "" && !navigator.geolocation) {
       console.error("Please enter a city.");
     } else if (this.state.cityName.length !== 0) {
+      this.setState({ loading: true });
+      console.log(this.state.loading);
       axios
         .get(
           `https://api.openweathermap.org/data/2.5/weather?q=${this.state.cityName}&APPID=${process.env.REACT_APP_OWM_API_KEY}`
@@ -33,7 +42,7 @@ class Forecast extends React.Component {
             weatherInfo: res.data
           });
         });
-      this.setState({ cityName: "" });
+      this.setState({ cityName: "", loading: false });
     } else {
       // prompts user to enable location and extracts user's location
       navigator.geolocation.getCurrentPosition(this.showPosition);
@@ -43,6 +52,7 @@ class Forecast extends React.Component {
   // function used to get location of current user and search weather using corresponding longitude and latitude
   showPosition = position => {
     const { longitude, latitude } = position.coords;
+    console.log(longitude);
 
     if (longitude.length !== 0 && latitude.length !== 0) {
       axios
@@ -62,11 +72,23 @@ class Forecast extends React.Component {
 
     return (
       <Fragment>
-        <h1 style={{ textAlign: "center" }}> Weather Forecast </h1>
+        <p
+          style={{
+            textAlign: "center",
+            fontFamily: "Great Vibes",
+            fontSize: "75px",
+            marginTop: "50px"
+          }}
+        >
+          {" "}
+          Weather Forecast{" "}
+        </p>
         <div style={{ textAlign: "center" }}>
           <Grid container spacing={3}>
             <Grid item xs={6}>
-              <h3>Search for a city!</h3>
+              <h3 style={{ marginBottom: "-15px" }}>
+                Search for a city or enable location!
+              </h3>
               <form onSubmit={this.onSubmit} style={{ marginTop: "5%" }}>
                 <TextField
                   id="outlined-basic"
@@ -100,7 +122,7 @@ class Forecast extends React.Component {
             <Grid item xs={6}>
               {Object.entries(this.state.weatherInfo).length !== 0 ? (
                 <div>
-                  <h1 style={{ marginBottom: "-50px" }}>
+                  <h1>
                     {name}, {sys.country} <br />
                     <br />
                   </h1>
@@ -110,11 +132,10 @@ class Forecast extends React.Component {
                       style={{ fontSize: "5em" }}
                     ></i>
                     <br />
+                    <br />
                     {weather[0].main}
                   </h2>
-                  <p style={{ marginBottom: "-25px" }}>
-                    {weather[0].description}
-                  </p>
+                  <p>{weather[0].description}</p>
                   <h1 style={{ fontSize: "50px" }}>
                     {parseFloat((main.temp - 273.15).toFixed(0))}
                     °C
@@ -128,8 +149,10 @@ class Forecast extends React.Component {
                   </h4>
                   {/* <WeeklyForecast city={name} country={sys.country} /> */}
                 </div>
+              ) : this.state.loading ? (
+                <OrbitSpinner />
               ) : (
-                <></>
+                <div></div>
               )}
             </Grid>
           </Grid>

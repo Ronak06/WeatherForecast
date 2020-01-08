@@ -12,7 +12,9 @@
     "react": "^16.12.0",
     "react-clock": "^2.4.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "@bit/bondz.react-epic-spinners.hollow-dots-spinner": "file:./components/hollow-dots-spinner",
+    "@bit/bondz.react-epic-spinners.orbit-spinner": "file:./components/orbit-spinner"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,5 +36,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "bit": {
+    "env": {},
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
   }
 }
