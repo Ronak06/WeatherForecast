@@ -32,16 +32,16 @@ class Forecast extends React.Component {
       console.log("debug pin");
     } else if (this.state.cityName.length !== 0) {
       this.setState({ loading: true });
-      console.log(this.state.loading);
-      axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${this.state.cityName}&APPID=${process.env.REACT_APP_OWM_API_KEY}`
-        )
-        .then(res => {
-          this.setState({
-            weatherInfo: res.data
-          });
+      // console.log(this.state.loading);
+      axios({
+        url: `https://api.openweathermap.org/data/2.5/weather?APPID=${process.env.REACT_APP_OWM_API_KEY}`,
+        method: "get",
+        params: { q: `${this.state.cityName}` }
+      }).then(res => {
+        this.setState({
+          weatherInfo: res.data
         });
+      });
       this.setState({ cityName: "", loading: false });
     } else {
       // prompts user to enable location and extracts user's location
@@ -55,15 +55,15 @@ class Forecast extends React.Component {
     console.log(longitude);
 
     if (longitude.length !== 0 && latitude.length !== 0) {
-      axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${process.env.REACT_APP_OWM_API_KEY}`
-        )
-        .then(res => {
-          this.setState({
-            weatherInfo: res.data
-          });
+      axios({
+        url: `https://api.openweathermap.org/data/2.5/weather?APPID=${process.env.REACT_APP_OWM_API_KEY}`,
+        method: "get",
+        params: { lat: `${latitude}`, lon: `${longitude}` }
+      }).then(res => {
+        this.setState({
+          weatherInfo: res.data
         });
+      });
     }
   };
 
