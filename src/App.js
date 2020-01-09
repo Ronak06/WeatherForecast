@@ -86,7 +86,6 @@ class App extends React.Component {
             <Grid item xs={6}>
               <p
                 style={{
-                  marginBottom: "-30px",
                   fontFamily: "IBM Plex Serif",
                   fontSize: "20px"
                 }}

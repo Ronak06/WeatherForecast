@@ -1,11 +1,57 @@
 import React from "react";
-
 import "../css/weather-icons.css";
-//import AnalogClock from "../components/AnalogClock";
 
 class Forecast extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isCel: true,
+      temp: parseFloat((this.props.weather.main.temp - 273.15).toFixed(0)),
+      feels: parseFloat(
+        (this.props.weather.main.feels_like - 273.15).toFixed(0)
+      ),
+      min: parseFloat((this.props.weather.main.temp_min - 273.15).toFixed(0)),
+      max: parseFloat((this.props.weather.main.temp_max - 273.15).toFixed(0))
+    };
+  }
+
+  ctof = () => {
+    const { temp, feels, min, max } = this.state;
+    const isCel = (this.state.isCel = !this.state.isCel);
+
+    if (isCel === true) {
+      let newTemp = ((temp - 32) * 5) / 9;
+      console.log(newTemp);
+      let newFeels = ((feels - 32) * 5) / 9;
+      let newMin = ((min - 32) * 5) / 9;
+      let newMax = ((max - 32) * 5) / 9;
+
+      this.setState({
+        temp: parseFloat(newTemp).toFixed(0),
+        feels: parseFloat(newFeels).toFixed(0),
+        min: parseFloat(newMin).toFixed(0),
+        max: parseFloat(newMax).toFixed(0),
+        isCel: isCel
+      });
+    } else {
+      let newTemp = (temp * 9) / 5 + 32;
+      let newFeels = (feels * 9) / 5 + 32;
+      let newMin = (min * 9) / 5 + 32;
+      let newMax = (max * 9) / 5 + 32;
+
+      this.setState({
+        temp: parseFloat(newTemp).toFixed(0),
+        feels: parseFloat(newFeels).toFixed(0),
+        min: parseFloat(newMin).toFixed(0),
+        max: parseFloat(newMax).toFixed(0),
+        isCel: isCel
+      });
+    }
+  };
+
   render() {
-    const { main, name, sys, weather } = this.props.weather;
+    const { name, sys, weather } = this.props.weather;
+    const { temp, feels, min, max, isCel } = this.state;
 
     return (
       <div style={{ marginRight: "30%" }}>
@@ -24,16 +70,17 @@ class Forecast extends React.Component {
         </h2>
         <p>{weather[0].description}</p>
         <h1 style={{ fontSize: "50px" }}>
-          {parseFloat((main.temp - 273.15).toFixed(0))}
-          °C
+          {temp}°{isCel ? "C" : "F"}
         </h1>
         <p>Feels like:</p>
-        <h4>{parseFloat(main.feels_like - 273.15).toFixed(0)}°C</h4>
+        <h4>
+          {feels}°{isCel ? "C" : "F"}
+        </h4>
         <p>Low/High:</p>
         <h4>
-          {parseFloat(main.temp_min - 273.15).toFixed(0)}°C/
-          {parseFloat(main.temp_max - 273.15).toFixed(0)}°C
+          {min}°{isCel ? "C" : "F"}/{max}°{isCel ? "C" : "F"}
         </h4>
+        <button onClick={this.ctof}>Fahrenheit</button>
         {/* <WeeklyForecast city={name} country={sys.country} /> */}
       </div>
     );
