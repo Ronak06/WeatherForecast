@@ -1,4 +1,6 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import "../css/weather-icons.css";
 
 class Forecast extends React.Component {
@@ -16,24 +18,9 @@ class Forecast extends React.Component {
   }
 
   ctof = () => {
-    const { temp, feels, min, max } = this.state;
-    const isCel = (this.state.isCel = !this.state.isCel);
+    const { temp, feels, min, max, isCel } = this.state;
 
     if (isCel === true) {
-      let newTemp = ((temp - 32) * 5) / 9;
-      console.log(newTemp);
-      let newFeels = ((feels - 32) * 5) / 9;
-      let newMin = ((min - 32) * 5) / 9;
-      let newMax = ((max - 32) * 5) / 9;
-
-      this.setState({
-        temp: parseFloat(newTemp).toFixed(0),
-        feels: parseFloat(newFeels).toFixed(0),
-        min: parseFloat(newMin).toFixed(0),
-        max: parseFloat(newMax).toFixed(0),
-        isCel: isCel
-      });
-    } else {
       let newTemp = (temp * 9) / 5 + 32;
       let newFeels = (feels * 9) / 5 + 32;
       let newMin = (min * 9) / 5 + 32;
@@ -44,7 +31,26 @@ class Forecast extends React.Component {
         feels: parseFloat(newFeels).toFixed(0),
         min: parseFloat(newMin).toFixed(0),
         max: parseFloat(newMax).toFixed(0),
-        isCel: isCel
+        isCel: false
+      });
+    }
+  };
+
+  ftoc = () => {
+    const { temp, feels, min, max, isCel } = this.state;
+
+    if (!isCel) {
+      let newTemp = ((temp - 32) * 5) / 9;
+      let newFeels = ((feels - 32) * 5) / 9;
+      let newMin = ((min - 32) * 5) / 9;
+      let newMax = ((max - 32) * 5) / 9;
+
+      this.setState({
+        temp: parseFloat(newTemp).toFixed(0),
+        feels: parseFloat(newFeels).toFixed(0),
+        min: parseFloat(newMin).toFixed(0),
+        max: parseFloat(newMax).toFixed(0),
+        isCel: true
       });
     }
   };
@@ -70,18 +76,24 @@ class Forecast extends React.Component {
         </h2>
         <p>{weather[0].description}</p>
         <h1 style={{ fontSize: "50px" }}>
-          {temp}°{isCel ? "C" : "F"}
+          {temp}
+          {isCel ? "°C" : "F"}
         </h1>
         <p>Feels like:</p>
         <h4>
-          {feels}°{isCel ? "C" : "F"}
+          {feels}
+          {isCel ? "°C" : "F"}
         </h4>
         <p>Low/High:</p>
         <h4>
-          {min}°{isCel ? "C" : "F"}/{max}°{isCel ? "C" : "F"}
+          {min}
+          {isCel ? "°C" : "F"}/{max}
+          {isCel ? "°C" : "F"}
         </h4>
-        <button onClick={this.ctof}>Fahrenheit</button>
-        {/* <WeeklyForecast city={name} country={sys.country} /> */}
+        <ButtonGroup aria-label="outlined primary button group">
+          <Button onClick={this.ftoc}>Celsius</Button>
+          <Button onClick={this.ctof}>Fahrenheit</Button>
+        </ButtonGroup>
       </div>
     );
   }
