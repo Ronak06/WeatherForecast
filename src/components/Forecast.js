@@ -17,6 +17,19 @@ class Forecast extends React.Component {
     };
   }
 
+  componentDidUpdate(prevState) {
+    if (prevState.weather.name != this.props.weather.name) {
+      this.setState({
+        temp: parseFloat((this.props.weather.main.temp - 273.15).toFixed(0)),
+        feels: parseFloat(
+          (this.props.weather.main.feels_like - 273.15).toFixed(0)
+        ),
+        min: parseFloat((this.props.weather.main.temp_min - 273.15).toFixed(0)),
+        max: parseFloat((this.props.weather.main.temp_max - 273.15).toFixed(0))
+      });
+    }
+  }
+
   ctof = () => {
     const { temp, feels, min, max, isCel } = this.state;
 
