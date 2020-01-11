@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/runtime": "^7.7.7",
     "@bit/bondz.react-epic-spinners.orbit-spinner": "file:./components/orbit-spinner",
     "@material-ui/core": "^4.8.2",
     "@material-ui/icons": "^4.5.1",

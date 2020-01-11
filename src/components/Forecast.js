@@ -2,67 +2,53 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import "../css/weather-icons.css";
+import { convertKtoC, convertCtoF, convertFtoC } from "../converter.js";
 
 class Forecast extends React.Component {
   constructor(props) {
     super(props);
+
+    const { temp, feels_like, temp_min, temp_max } = this.props.weather.main;
+
     this.state = {
       isCel: true,
-      temp: parseFloat((this.props.weather.main.temp - 273.15).toFixed(0)),
-      feels: parseFloat(
-        (this.props.weather.main.feels_like - 273.15).toFixed(0)
-      ),
-      min: parseFloat((this.props.weather.main.temp_min - 273.15).toFixed(0)),
-      max: parseFloat((this.props.weather.main.temp_max - 273.15).toFixed(0))
+      temp: convertKtoC(temp),
+      feels: convertKtoC(feels_like),
+      min: convertKtoC(temp_min),
+      max: convertKtoC(temp_max)
     };
   }
 
   componentDidUpdate(prevState) {
-    if (prevState.weather.name != this.props.weather.name) {
+    if (prevState.weather.name !== this.props.weather.name) {
+      const { temp, feels_like, temp_min, temp_max } = this.props.weather.main;
+
       this.setState({
-        temp: parseFloat((this.props.weather.main.temp - 273.15).toFixed(0)),
-        feels: parseFloat(
-          (this.props.weather.main.feels_like - 273.15).toFixed(0)
-        ),
-        min: parseFloat((this.props.weather.main.temp_min - 273.15).toFixed(0)),
-        max: parseFloat((this.props.weather.main.temp_max - 273.15).toFixed(0))
+        temp: convertKtoC(temp),
+        feels: convertKtoC(feels_like),
+        min: convertKtoC(temp_min),
+        max: convertKtoC(temp_max)
       });
     }
   }
 
-  ctof = () => {
+  convertWeather = () => {
     const { temp, feels, min, max, isCel } = this.state;
 
     if (isCel === true) {
-      let newTemp = (temp * 9) / 5 + 32;
-      let newFeels = (feels * 9) / 5 + 32;
-      let newMin = (min * 9) / 5 + 32;
-      let newMax = (max * 9) / 5 + 32;
-
       this.setState({
-        temp: parseFloat(newTemp).toFixed(0),
-        feels: parseFloat(newFeels).toFixed(0),
-        min: parseFloat(newMin).toFixed(0),
-        max: parseFloat(newMax).toFixed(0),
+        temp: convertCtoF(temp),
+        feels: convertCtoF(feels),
+        min: convertCtoF(min),
+        max: convertCtoF(max),
         isCel: false
       });
-    }
-  };
-
-  ftoc = () => {
-    const { temp, feels, min, max, isCel } = this.state;
-
-    if (!isCel) {
-      let newTemp = ((temp - 32) * 5) / 9;
-      let newFeels = ((feels - 32) * 5) / 9;
-      let newMin = ((min - 32) * 5) / 9;
-      let newMax = ((max - 32) * 5) / 9;
-
+    } else {
       this.setState({
-        temp: parseFloat(newTemp).toFixed(0),
-        feels: parseFloat(newFeels).toFixed(0),
-        min: parseFloat(newMin).toFixed(0),
-        max: parseFloat(newMax).toFixed(0),
+        temp: convertFtoC(temp),
+        feels: convertFtoC(feels),
+        min: convertFtoC(min),
+        max: convertFtoC(max),
         isCel: true
       });
     }
@@ -73,8 +59,8 @@ class Forecast extends React.Component {
     const { temp, feels, min, max, isCel } = this.state;
 
     return (
-      <div style={{ marginRight: "30%" }}>
-        <h1 style={{ marginBottom: "-5%" }}>
+      <div>
+        <h1>
           {name}, {sys.country} <br />
           <br />
         </h1>
@@ -104,8 +90,9 @@ class Forecast extends React.Component {
           {isCel ? "°C" : "F"}
         </h4>
         <ButtonGroup aria-label="outlined primary button group">
-          <Button onClick={this.ftoc}>Celsius</Button>
-          <Button onClick={this.ctof}>Fahrenheit</Button>
+          <Button onClick={this.convertWeather}>
+            {isCel ? "Fahrenheit" : "Celsius"}
+          </Button>
         </ButtonGroup>
       </div>
     );

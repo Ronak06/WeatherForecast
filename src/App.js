@@ -7,6 +7,7 @@ import OrbitSpinner from "@bit/bondz.react-epic-spinners.orbit-spinner";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 
 import Forecast from "./components/Forecast";
+import Header from "./components/Header";
 import "./App.css";
 
 class App extends React.Component {
@@ -70,64 +71,79 @@ class App extends React.Component {
   render() {
     return (
       <Fragment>
-        <p
-          style={{
-            textAlign: "center",
-            fontFamily: "Great Vibes",
-            fontSize: "75px",
-            marginTop: "50px"
-          }}
-        >
-          {" "}
-          Weather Forecast{" "}
-        </p>
-        <div style={{ textAlign: "center" }}>
-          <Grid container spacing={3}>
-            <Grid item xs={6}>
-              <p
-                style={{
-                  fontFamily: "IBM Plex Serif",
-                  fontSize: "20px"
-                }}
-              >
-                Search for a city or enable location!
-              </p>
-              <form onSubmit={this.onSubmit} style={{ marginTop: "5%" }}>
-                <TextField
-                  id="outlined-basic"
-                  label="City"
-                  variant="outlined"
-                  onChange={this.onChange}
-                  value={this.state.cityName}
-                  style={{ margin: "5px" }}
-                  size="small"
-                />
-                <Button
-                  onClick={this.onSubmit}
-                  style={{ marginBottom: "-30px" }}
-                >
-                  <MyLocationIcon />
-                </Button>
+        <Header />
+        {Object.entries(this.state.weatherInfo).length !== 0 ? (
+          <div style={{ textAlign: "center" }}>
+            <p
+              style={{
+                fontFamily: "IBM Plex Serif",
+                fontSize: "20px"
+              }}
+            >
+              Search for a city or enable location!
+            </p>
+            <form onSubmit={this.onSubmit}>
+              <TextField
+                id="outlined-basic"
+                label="City"
+                variant="outlined"
+                onChange={this.onChange}
+                value={this.state.cityName}
+                style={{ marginBottom: "-15px" }}
+                size="small"
+              />
+              <Button onClick={this.onSubmit} style={{ marginBottom: "-15px" }}>
+                <MyLocationIcon />
+              </Button>
 
-                <br />
-                <br />
-                <Button variant="outlined" size="medium" type="submit">
-                  >>
-                </Button>
-              </form>
-              {/* <AnalogClock /> */}
-            </Grid>
-            <Grid item xs={6}>
-              {Object.entries(this.state.weatherInfo).length !== 0 ? (
-                <Forecast weather={this.state.weatherInfo} />
-              ) : this.state.loading ? (
-                <OrbitSpinner />
-              ) : (
-                <div></div>
-              )}
-            </Grid>
-          </Grid>
-        </div>
+              <Button
+                variant="outlined"
+                size="medium"
+                type="submit"
+                style={{ marginBottom: "-15px" }}
+              >
+                >>
+              </Button>
+            </form>
+            <Forecast weather={this.state.weatherInfo} />
+          </div>
+        ) : this.state.loading ? (
+          <OrbitSpinner />
+        ) : (
+          <div style={{ textAlign: "center" }}>
+            <p
+              style={{
+                fontFamily: "IBM Plex Serif",
+                fontSize: "20px"
+              }}
+            >
+              Search for a city or enable location!
+            </p>
+            <form onSubmit={this.onSubmit}>
+              <TextField
+                id="outlined-basic"
+                label="City"
+                variant="outlined"
+                onChange={this.onChange}
+                value={this.state.cityName}
+                style={{ marginBottom: "-15px" }}
+                size="small"
+              />
+              <Button onClick={this.onSubmit} style={{ marginBottom: "-15px" }}>
+                <MyLocationIcon />
+              </Button>
+
+              <Button
+                variant="outlined"
+                size="medium"
+                type="submit"
+                style={{ marginBottom: "-15px" }}
+              >
+                >>
+              </Button>
+            </form>
+          </div>
+        )}
       </Fragment>
     );
   }
