@@ -2,33 +2,51 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import "../css/weather-icons.css";
-import { convertKtoC, convertCtoF, convertFtoC } from "../converter.js";
+import { convertCtoF, convertFtoC } from "../converter.js";
 
 class Forecast extends React.Component {
   constructor(props) {
     super(props);
 
-    const { temp, feels_like, temp_min, temp_max } = this.props.weather.main;
+    // console.log(this.props);
+
+    const {
+      temperatureLow,
+      temperatureHigh
+    } = this.props.weather.daily.data[0];
+    const {
+      apparentTemperature,
+      summary,
+      temperature,
+      windSpeed
+    } = this.props.weather.currently;
 
     this.state = {
       isCel: true,
-      temp: convertKtoC(temp),
-      feels: convertKtoC(feels_like),
-      min: convertKtoC(temp_min),
-      max: convertKtoC(temp_max)
+      temp: convertFtoC(temperature),
+      feels: convertFtoC(apparentTemperature),
+      min: convertFtoC(temperatureLow),
+      max: convertFtoC(temperatureHigh)
     };
   }
 
   componentDidUpdate(prevState) {
     if (prevState.weather.name !== this.props.weather.name) {
-      const { temp, feels_like, temp_min, temp_max } = this.props.weather.main;
+      const { temperatureLow, temperatureHigh } = this.props.daily.data[0];
+      const {
+        apparentTemperature,
+        summary,
+        temperature,
+        windSpeed
+      } = this.props.currently;
 
-      this.setState({
-        temp: convertKtoC(temp),
-        feels: convertKtoC(feels_like),
-        min: convertKtoC(temp_min),
-        max: convertKtoC(temp_max)
-      });
+      this.state = {
+        isCel: true,
+        temp: convertFtoC(temperature),
+        feels: convertFtoC(apparentTemperature),
+        min: convertFtoC(temperatureLow),
+        max: convertFtoC(temperatureHigh)
+      };
     }
   }
 
@@ -55,25 +73,24 @@ class Forecast extends React.Component {
   };
 
   render() {
-    const { name, sys, weather } = this.props.weather;
+    const { city, country } = this.props.geography.components;
+    const { currently, daily, hourly } = this.props.weather;
     const { temp, feels, min, max, isCel } = this.state;
 
     return (
       <div>
         <h1>
-          {name}, {sys.country} <br />
-          <br />
+          {city}, {country} <br />
         </h1>
         <h2>
-          <i
-            className={`wi wi-owm-${weather[0].id}`}
-            style={{ fontSize: "5em" }}
-          ></i>
+          <svg width="5cm" height="4px">
+            <img href="SVG/Cloud-Rain.svg" />
+          </svg>
           <br />
           <br />
-          {weather[0].main}
+          {currently.summary}
         </h2>
-        <p>{weather[0].description}</p>
+        <p>{daily.data[0].summary}</p>
         <h1 style={{ fontSize: "50px" }}>
           {temp}
           {isCel ? "°C" : "F"}
