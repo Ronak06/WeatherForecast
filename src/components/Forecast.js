@@ -1,14 +1,13 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import "../css/weather-icons.css";
-import { convertCtoF, convertFtoC } from "../converter.js";
+import { convertCtoF, convertFtoC } from "../helpers/converter.js";
+import WeatherIcon from "./WeatherIcon.js";
+import { isUndefined } from "util";
 
 class Forecast extends React.Component {
   constructor(props) {
     super(props);
-
-    // console.log(this.props);
 
     const {
       temperatureLow,
@@ -16,37 +15,44 @@ class Forecast extends React.Component {
     } = this.props.weather.daily.data[0];
     const {
       apparentTemperature,
-      summary,
       temperature,
-      windSpeed
+      icon
     } = this.props.weather.currently;
+
+    let newIcon = icon.replace(/-/g, "").toUpperCase();
 
     this.state = {
       isCel: true,
       temp: convertFtoC(temperature),
       feels: convertFtoC(apparentTemperature),
       min: convertFtoC(temperatureLow),
-      max: convertFtoC(temperatureHigh)
+      max: convertFtoC(temperatureHigh),
+      icon: newIcon
     };
   }
 
   componentDidUpdate(prevState) {
-    if (prevState.weather.name !== this.props.weather.name) {
-      const { temperatureLow, temperatureHigh } = this.props.daily.data[0];
+    if (prevState.weather !== this.props.weather) {
+      const {
+        temperatureLow,
+        temperatureHigh
+      } = this.props.weather.daily.data[0];
       const {
         apparentTemperature,
-        summary,
         temperature,
-        windSpeed
-      } = this.props.currently;
+        icon
+      } = this.props.weather.currently;
 
-      this.state = {
+      let newIcon = icon.replace(/-/g, "").toUpperCase();
+
+      this.setState({
         isCel: true,
         temp: convertFtoC(temperature),
         feels: convertFtoC(apparentTemperature),
         min: convertFtoC(temperatureLow),
-        max: convertFtoC(temperatureHigh)
-      };
+        max: convertFtoC(temperatureHigh),
+        icon: newIcon
+      });
     }
   }
 
@@ -73,20 +79,21 @@ class Forecast extends React.Component {
   };
 
   render() {
-    const { city, country } = this.props.geography.components;
     const { currently, daily, hourly } = this.props.weather;
-    const { temp, feels, min, max, isCel } = this.state;
+    const { temp, feels, min, max, isCel, icon } = this.state;
+
+    const { components } = this.props.geography;
 
     return (
       <div>
         <h1>
-          {city}, {country} <br />
+          <br />
+          {isUndefined(components.city)
+            ? components.county
+            : components.city}, {components.country} <br />
         </h1>
         <h2>
-          <svg width="5cm" height="4px">
-            <img href="SVG/Cloud-Rain.svg" />
-          </svg>
-          <br />
+          <WeatherIcon icon={icon} />
           <br />
           {currently.summary}
         </h2>

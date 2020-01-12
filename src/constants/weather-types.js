@@ -1,0 +1,13 @@
+export const CLEARDAY = "Sun.svg";
+export const CLEARNIGHT = "Moon.svg";
+export const RAIN = "Cloud-Rain.svg";
+export const SNOW = "Snowflake.svg";
+export const SLEET = "Cloud-Snow.svg";
+export const WIND = "Wind.svg";
+export const FOG = "Cloud-Fog.svg";
+export const CLOUDY = "Cloud.svg";
+export const PARTLYCLOUDYDAY = "Cloud-Wind-Sun.svg";
+export const PARTLYCLOUDYNIGHT = "Cloud-Wind-Moon.svg";
+export const HAIL = "Cloud-Hail";
+export const THUNDERSTORM = "Cloud-Lightning.svg";
+export const TORNADO = "Tornado.svg";

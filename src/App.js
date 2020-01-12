@@ -41,7 +41,8 @@ class App extends React.Component {
       this.setState({
         longitude: lng,
         latitude: lat,
-        geoData: res.data.results[0]
+        geoData: res.data.results[0],
+        cityName: ""
       });
       this.getWeather();
     });
@@ -54,6 +55,7 @@ class App extends React.Component {
         method: "get"
       }).then(res => {
         // console.log(res.data);
+        console.log("r");
         this.setState({ weatherInfo: res.data });
         // console.log(this.state.weatherInfo);
       });
