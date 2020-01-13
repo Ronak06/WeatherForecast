@@ -5,6 +5,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Collapse from "@material-ui/core/Collapse";
 import Moment from "react-moment";
 import uuid from "uuid";
 
@@ -21,8 +22,8 @@ class WeeklyForecast extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const { data } = this.state.weeklyInfo;
+    const { isCel } = this.props;
 
     return (
       <div>
@@ -54,8 +55,18 @@ class WeeklyForecast extends React.Component {
                       <Moment unix>{item.time}</Moment>
                     </TableCell>
                     <TableCell>{item.summary}</TableCell>
-                    <TableCell>{convertFtoC(item.temperatureLow)}°C</TableCell>
-                    <TableCell>{convertFtoC(item.temperatureHigh)}°C</TableCell>
+                    <TableCell>
+                      {isCel
+                        ? convertFtoC(item.temperatureLow)
+                        : item.temperatureLow}{" "}
+                      {isCel ? "°C" : "F"}
+                    </TableCell>
+                    <TableCell>
+                      {isCel
+                        ? convertFtoC(item.temperatureHigh)
+                        : item.temperatureHigh}{" "}
+                      {isCel ? "°C" : "F"}
+                    </TableCell>
                   </TableRow>
                 ))
               ) : (

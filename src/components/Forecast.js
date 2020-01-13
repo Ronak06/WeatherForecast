@@ -5,7 +5,6 @@ import { convertCtoF, convertFtoC } from "../helpers/converter.js";
 import WeatherIcon from "./WeatherIcon.js";
 import WeeklyForecast from "./WeeklyForecast";
 import { isUndefined } from "util";
-import Grid from "@material-ui/core/Grid";
 
 class Forecast extends React.Component {
   constructor(props) {
@@ -15,11 +14,7 @@ class Forecast extends React.Component {
       temperatureLow,
       temperatureHigh
     } = this.props.weather.daily.data[0];
-    const {
-      apparentTemperature,
-      temperature,
-      icon
-    } = this.props.weather.currently;
+    const { apparentTemperature, temperature } = this.props.weather.currently;
 
     this.state = {
       isCel: true,
@@ -109,7 +104,7 @@ class Forecast extends React.Component {
         </ButtonGroup>
         <br />
         <br />
-        <WeeklyForecast daily={daily} />
+        <WeeklyForecast daily={daily} isCel={isCel} />
       </div>
     );
   }
