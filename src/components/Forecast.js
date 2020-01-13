@@ -70,6 +70,8 @@ class Forecast extends React.Component {
     const { temp, feels, min, max, isCel } = this.state;
     const { components } = this.props.geography;
 
+    console.log(this.props);
+
     return (
       <div>
         <h1>
