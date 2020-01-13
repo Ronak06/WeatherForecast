@@ -1,42 +1,62 @@
 import React from "react";
-import axios from "axios";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Moment from "react-moment";
+
+import WeatherIcon from "./WeatherIcon";
+import { convertFtoC } from "../helpers/converter";
 
 class WeeklyForecast extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { weeklyInfo: [] };
+    this.state = {
+      weeklyInfo: this.props.daily,
+      summary: this.props.daily.summary
+    };
   }
 
-  componentDidMount() {
-    // console.log(this.props.city);
-    // console.log(this.props.country);
-    // axios
-    //   .get(
-    //     `http://api.openweathermap.org/data/2.5/forecast?APPID=bf1652439d3e518f2bd45f4ef891dfcc&q=${this.props.city},${this.props.country}`
-    //   )
-    //   .then(res => {
-    //     const weatherC = res.data;
-    //     //console.log(weatherC);
-    //     this.setState({
-    //       weeklyInfo: weatherC
-    //     });
-    //   });
-  }
   render() {
-    const { list } = this.state.weeklyInfo;
-    {
-      console.log(this.state.weeklyInfo);
-      console.log(list);
-    }
+    console.log(this.props);
+    const { data } = this.state.weeklyInfo;
 
     return (
       <div>
-        <h3>This is the weekly forecast!</h3>
-        {list !== undefined ? (
-          list.map(item => <p>{item.dt_txt}</p>)
-        ) : (
-          <p> nothing yet</p>
-        )}
+        <h2>Weekly Forecast</h2>
+
+        <TableContainer>
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell></TableCell>
+                <TableCell>Date</TableCell>
+                <TableCell>Low</TableCell>
+                <TableCell>High</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data !== undefined ? (
+                data.map(item => (
+                  <TableRow>
+                    <TableCell component="th" scope="row">
+                      <WeatherIcon icon={item.icon} />
+                    </TableCell>
+                    <TableCell>
+                      <Moment unix>{item.time}</Moment>
+                    </TableCell>
+                    <TableCell>{convertFtoC(item.temperatureLow)}°C</TableCell>
+                    <TableCell>{convertFtoC(item.temperatureHigh)}°C</TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <p> nothing yet</p>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
     );
   }

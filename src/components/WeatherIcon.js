@@ -16,7 +16,9 @@ import {
 } from "../constants/weather-types.js";
 
 const WeatherIcon = ({ icon }) => {
-  switch (icon) {
+  let newIcon = icon.replace(/-/g, "").toUpperCase();
+
+  switch (newIcon) {
     case "CLEARDAY":
       return (
         <img

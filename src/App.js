@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import OrbitSpinner from "@bit/bondz.react-epic-spinners.orbit-spinner";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 
 import Forecast from "./components/Forecast";
