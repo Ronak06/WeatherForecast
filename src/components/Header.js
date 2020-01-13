@@ -6,8 +6,8 @@ const Header = () => {
       style={{
         textAlign: "center",
         fontFamily: "Great Vibes",
-        fontSize: "75px",
-        marginTop: "50px"
+        fontSize: "100px",
+        marginTop: "25px"
       }}
     >
       {" "}

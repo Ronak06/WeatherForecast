@@ -71,53 +71,45 @@ class Forecast extends React.Component {
   };
 
   render() {
-    const { currently, daily, hourly } = this.props.weather;
+    const { currently, daily } = this.props.weather;
     const { temp, feels, min, max, isCel } = this.state;
     const { components } = this.props.geography;
 
     return (
       <div>
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <h1>
-              <br />
-              {isUndefined(components.city)
-                ? components.county
-                : components.city}
-              , {components.country} <br />
-            </h1>
-            <h2>
-              <WeatherIcon icon={this.props.weather.currently.icon} />
-              <br />
-              {currently.summary}
-            </h2>
-            <p>{daily.data[0].summary}</p>
-            <h1 style={{ fontSize: "50px" }}>
-              {temp}
-              {isCel ? "°C" : "F"}
-            </h1>
-            <p>Feels like:</p>
-            <h4>
-              {feels}
-              {isCel ? "°C" : "F"}
-            </h4>
-            <p>Low/High:</p>
-            <h4>
-              {min}
-              {isCel ? "°C" : "F"}/{max}
-              {isCel ? "°C" : "F"}
-            </h4>
-            <ButtonGroup aria-label="outlined primary button group">
-              <Button onClick={this.convertWeather}>
-                {isCel ? "Fahrenheit" : "Celsius"}
-              </Button>
-            </ButtonGroup>
-            <br />
-          </Grid>
-          <Grid item xs={6}>
-            <WeeklyForecast daily={daily} />
-          </Grid>
-        </Grid>
+        <h1>
+          {isUndefined(components.city) ? components.county : components.city},{" "}
+          {components.country} <br />
+        </h1>
+        <h2>
+          <WeatherIcon icon={this.props.weather.currently.icon} />
+          <br />
+          {currently.summary}
+        </h2>
+        <p>{daily.data[0].summary}</p>
+        <h1 style={{ fontSize: "50px" }}>
+          {temp}
+          {isCel ? "°C" : "F"}
+        </h1>
+        <p>Feels like:</p>
+        <h4>
+          {feels}
+          {isCel ? "°C" : "F"}
+        </h4>
+        <p>Low/High:</p>
+        <h4>
+          {min}
+          {isCel ? "°C" : "F"}/{max}
+          {isCel ? "°C" : "F"}
+        </h4>
+        <ButtonGroup aria-label="outlined primary button group">
+          <Button onClick={this.convertWeather}>
+            {isCel ? "Fahrenheit" : "Celsius"}
+          </Button>
+        </ButtonGroup>
+        <br />
+        <br />
+        <WeeklyForecast daily={daily} />
       </div>
     );
   }

@@ -53,10 +53,7 @@ class App extends React.Component {
         url: `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${process.env.REACT_APP_DARK_API_KEY}/${this.state.latitude},${this.state.longitude}`,
         method: "get"
       }).then(res => {
-        // console.log(res.data);
-        console.log("r");
         this.setState({ weatherInfo: res.data });
-        // console.log(this.state.weatherInfo);
       });
     }
   };
