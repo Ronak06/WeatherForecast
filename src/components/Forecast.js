@@ -4,7 +4,6 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { convertCtoF, convertFtoC } from "../helpers/converter.js";
 import WeatherIcon from "./WeatherIcon.js";
 import WeeklyForecast from "./WeeklyForecast";
-import { isUndefined } from "util";
 
 class Forecast extends React.Component {
   constructor(props) {
@@ -68,15 +67,14 @@ class Forecast extends React.Component {
   render() {
     const { currently, daily } = this.props.weather;
     const { temp, feels, min, max, isCel } = this.state;
-    const { components } = this.props.geography;
+    const { formatted } = this.props.geography;
 
     console.log(this.props);
 
     return (
       <div>
         <h1>
-          {isUndefined(components.city) ? components.county : components.city},{" "}
-          {components.country} <br />
+          {formatted} <br />
         </h1>
         <h2>
           <WeatherIcon icon={this.props.weather.currently.icon} />

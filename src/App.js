@@ -41,7 +41,7 @@ class App extends React.Component {
         params: { q: `${this.state.cityName}` }
       }).then(res => {
         const { lng, lat } = res.data.results[0].geometry;
-        // console.log(res.data);
+        console.log(res.data);
         this.setState({
           longitude: lng,
           latitude: lat,
@@ -74,6 +74,8 @@ class App extends React.Component {
     const { longitude, latitude } = position.coords;
     // console.log(longitude);
 
+    this.getLocationName(latitude + "%2C%20" + longitude);
+
     if (longitude.length !== 0 && latitude.length !== 0) {
       axios({
         url: `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${process.env.REACT_APP_DARK_API_KEY}/${latitude},${longitude}`,
@@ -82,6 +84,18 @@ class App extends React.Component {
         this.setState({ weatherInfo: res.data });
       });
     }
+  };
+
+  getLocationName = props => {
+    console.log(props);
+    axios({
+      url: `https://api.opencagedata.com/geocode/v1/json?q=${props}&key=${process.env.REACT_APP_CAGE_API_KEY}&language=en&pretty=1`,
+      method: "get"
+    }).then(res => {
+      this.setState({
+        geoData: res.data.results[0]
+      });
+    });
   };
 
   imFeelingLucky = () => {

@@ -57,13 +57,13 @@ class WeeklyForecast extends React.Component {
                     <TableCell>
                       {isCel
                         ? convertFtoC(item.temperatureLow)
-                        : item.temperatureLow}{" "}
+                        : item.temperatureLow}
                       {isCel ? "°C" : "F"}
                     </TableCell>
                     <TableCell>
                       {isCel
                         ? convertFtoC(item.temperatureHigh)
-                        : item.temperatureHigh}{" "}
+                        : item.temperatureHigh}
                       {isCel ? "°C" : "F"}
                     </TableCell>
                   </TableRow>
