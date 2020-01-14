@@ -99,8 +99,9 @@ class App extends React.Component {
   };
 
   imFeelingLucky = () => {
-    let coords = randomCoordinates({ fixed: 2 });
-    console.log(coords);
+    let coords = randomCoordinates({ fixed: 2 }).split(",");
+
+    this.getLocationName(coords[0] + "%2C%20" + coords[1]);
 
     axios({
       url: `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${process.env.REACT_APP_DARK_API_KEY}/${coords}`,
@@ -139,10 +140,18 @@ class App extends React.Component {
                 >>
               </Button>
             </form>
-            <Button onClick={this.useGeolocation} style={{ marginTop: "25px" }}>
+            <Button
+              onClick={this.useGeolocation}
+              variant="outlined"
+              style={{ marginTop: "25px", marginRight: "10px" }}
+            >
               <MyLocationIcon />
             </Button>
-            <Button onClick={this.imFeelingLucky} style={{ marginTop: "25px" }}>
+            <Button
+              onClick={this.imFeelingLucky}
+              variant="outlined"
+              style={{ marginTop: "25px" }}
+            >
               I'm feeling lucky!
             </Button>
             <br />
@@ -176,10 +185,18 @@ class App extends React.Component {
                 >>
               </Button>
             </form>
-            <Button onClick={this.useGeolocation} style={{ marginTop: "25px" }}>
+            <Button
+              onClick={this.useGeolocation}
+              variant="outlined"
+              style={{ marginTop: "25px", marginRight: "10px" }}
+            >
               <MyLocationIcon />
             </Button>
-            <Button onClick={this.imFeelingLucky} style={{ marginTop: "25px" }}>
+            <Button
+              onClick={this.imFeelingLucky}
+              variant="outlined"
+              style={{ marginTop: "25px" }}
+            >
               I'm feeling lucky!
             </Button>
           </div>
