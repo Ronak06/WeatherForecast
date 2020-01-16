@@ -11,3 +11,5 @@ This application is a weather forecaster which leverages Open Weather Map's API 
 5. Run 'npm start' in the application directory. 
 6. Enjoy! 
 
+# Demo
+<a href="https://imgflip.com/gif/3m9h72"><img src="https://i.imgflip.com/3m9h72.gif" title="made at imgflip.com"/></a>
