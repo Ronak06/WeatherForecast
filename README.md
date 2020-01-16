@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Weather Forecast
-This application is a weather forecaster which leverages Open Weather Map's API to provide the latest weather for a given city or user location.
+This application is a weather forecaster which leverages the Dark Sky API to provide the latest weather for a given city or user location. Additionally, users are able to get the weather for their exact location (by clicking the GPS button) or see weather in a random location by clicking the I'm Feeling Lucky button. Both of the following features leverage OpenCage Geocoder to translate longitude and latitude into a city name and vice versa.
 
 # To run application
 1. Clone application using git clone cli. 
