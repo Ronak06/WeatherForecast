@@ -9,7 +9,7 @@ import Moment from "react-moment";
 import uuid from "uuid";
 
 import WeatherIcon from "./WeatherIcon";
-import { convertFtoC } from "../helpers/converter";
+import { convertFtoC } from "../../helpers/converter";
 
 class WeeklyForecast extends React.Component {
   constructor(props) {

@@ -13,7 +13,7 @@ import {
   HAIL,
   THUNDERSTORM,
   TORNADO
-} from "../constants/weather-types.js";
+} from "../../constants/weather-types.js";
 
 const WeatherIcon = ({ icon }) => {
   let newIcon = icon.replace(/-/g, "").toUpperCase();
