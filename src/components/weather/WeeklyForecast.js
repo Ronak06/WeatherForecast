@@ -21,7 +21,7 @@ class WeeklyForecast extends React.Component {
   }
 
   render() {
-    const { data } = this.state.weeklyInfo;
+    const { data } = this.props.daily;
     const { isCel } = this.props;
 
     return (
