@@ -28,7 +28,7 @@ class WeeklyForecast extends React.Component {
       <div>
         <br />
         <br />
-        <h2 style={{ fontFamily: "Great Vibes", fontSize: "75px" }}>
+        <h2 style={{ fontFamily: "Great Vibes", fontSize: "75px", textAlign: "center" }}>
           Weekly Forecast
         </h2>
 

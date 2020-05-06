@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import randomCoordinates from "random-coordinates";
 
+
 import Forecast from "./weather/Forecast";
 import WeeklyForecast from "./weather/WeeklyForecast";
 
@@ -20,7 +21,8 @@ class Form extends React.Component {
       lat: "",
       loading: false,
       longitude: "",
-      latitude: ""
+      latitude: "",
+      isCel: true
     };
   }
 
@@ -111,6 +113,10 @@ class Form extends React.Component {
     });
   };
 
+  myCallBack = (fromForecast) => {
+    this.setState({isCel: fromForecast});
+  }
+
   render() {
     return (
       <Fragment>
@@ -160,11 +166,15 @@ class Form extends React.Component {
             </Grid>
             <Grid item xs={6}>
               <div style={{ textAlign: "center", marginTop: "-40px"}}>
-              <Forecast
-                weather={this.state.weatherInfo}
-                geography={this.state.geoData}
-              />
+                <Forecast
+                  weather={this.state.weatherInfo}
+                  geography={this.state.geoData}
+                  callbackFromParent={this.myCallBack}
+                />
               </div>
+            </Grid>
+            <Grid item xs={12}>
+              <WeeklyForecast daily={this.state.weatherInfo.daily} isCel={this.state.isCel}/>
             </Grid>
           </Grid>
         ) : (

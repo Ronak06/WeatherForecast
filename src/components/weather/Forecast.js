@@ -1,9 +1,8 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
 import { convertCtoF, convertFtoC } from "../../helpers/converter.js";
 import WeatherIcon from "./WeatherIcon.js";
-import WeeklyForecast from "./WeeklyForecast";
 import { isUndefined } from "util";
 
 class Forecast extends React.Component {
@@ -15,6 +14,7 @@ class Forecast extends React.Component {
       temperatureHigh
     } = this.props.weather.daily.data[0];
     const { apparentTemperature, temperature } = this.props.weather.currently;
+
 
     this.state = {
       isCel: true,
@@ -54,6 +54,8 @@ class Forecast extends React.Component {
         max: convertCtoF(max),
         isCel: false
       });
+      this.props.callbackFromParent(false);
+ 
     } else {
       this.setState({
         temp: convertFtoC(temp),
@@ -62,6 +64,7 @@ class Forecast extends React.Component {
         max: convertFtoC(max),
         isCel: true
       });
+      this.props.callbackFromParent(true);
     }
   };
 
@@ -109,7 +112,6 @@ class Forecast extends React.Component {
         </ButtonGroup>
         <br />
         <br />
-        {/* <WeeklyForecast daily={daily} isCel={isCel} /> */}
       </div>
     );
   }
