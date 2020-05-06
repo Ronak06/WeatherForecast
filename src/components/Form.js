@@ -2,10 +2,12 @@ import React, { Fragment } from "react";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Grid from '@material-ui/core/Grid';
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import randomCoordinates from "random-coordinates";
 
 import Forecast from "./weather/Forecast";
+import WeeklyForecast from "./weather/WeeklyForecast";
 
 class Form extends React.Component {
   constructor(props) {
@@ -113,50 +115,58 @@ class Form extends React.Component {
     return (
       <Fragment>
         {Object.entries(this.state.weatherInfo).length !== 0 ? (
-          <div style={{ textAlign: "center" }}>
-            <p
-              style={{
-                fontFamily: "IBM Plex Serif",
-                fontSize: "20px"
-              }}
-            >
-              Search for a city or enable location!
-            </p>
-            <form onSubmit={this.onSubmit}>
-              <TextField
-                id="outlined-basic"
-                label="City"
-                variant="outlined"
-                onChange={this.onChange}
-                value={this.state.cityName}
-                style={{ marginBottom: "-5px", marginRight: "10px" }}
-                size="small"
-              />
+          <Grid container spacing={1}>
+            <Grid item xs={6}>
+              <div style={{ textAlign: "center" }}>
+              <p
+                style={{
+                  fontFamily: "IBM Plex Serif",
+                  fontSize: "20px"
+                }}
+              >
+                Enter a city or enable location
+              </p>
+              <form onSubmit={this.onSubmit}>
+                <TextField
+                  id="outlined-basic"
+                  label="City"
+                  variant="outlined"
+                  onChange={this.onChange}
+                  value={this.state.cityName}
+                  style={{ marginBottom: "-5px", marginRight: "10px" }}
+                  size="small"
+                />
 
-              <Button variant="outlined" size="medium" type="submit">
-                >>
+                <Button variant="outlined" size="medium" type="submit">
+                  Search
+                </Button>
+              </form>
+              <Button
+                onClick={this.useGeolocation}
+                variant="outlined"
+                style={{ marginTop: "25px", marginRight: "10px" }}
+              >
+                <MyLocationIcon />
               </Button>
-            </form>
-            <Button
-              onClick={this.useGeolocation}
-              variant="outlined"
-              style={{ marginTop: "25px", marginRight: "10px" }}
-            >
-              <MyLocationIcon />
-            </Button>
-            <Button
-              onClick={this.imFeelingLucky}
-              variant="outlined"
-              style={{ marginTop: "25px" }}
-            >
-              I'm feeling lucky!
-            </Button>
-            <br />
-            <Forecast
-              weather={this.state.weatherInfo}
-              geography={this.state.geoData}
-            />
-          </div>
+              <Button
+                onClick={this.imFeelingLucky}
+                variant="outlined"
+                style={{ marginTop: "25px" }}
+              >
+                I'm feeling lucky!
+              </Button>
+              <br />
+            </div>
+            </Grid>
+            <Grid item xs={6}>
+              <div style={{ textAlign: "center", marginTop: "-40px"}}>
+              <Forecast
+                weather={this.state.weatherInfo}
+                geography={this.state.geoData}
+              />
+              </div>
+            </Grid>
+          </Grid>
         ) : (
           <div style={{ textAlign: "center" }}>
             <p
@@ -165,7 +175,7 @@ class Form extends React.Component {
                 fontSize: "20px"
               }}
             >
-              Search for a city or enable location!
+              Enter a city or enable location
             </p>
             <form onSubmit={this.onSubmit}>
               <TextField
@@ -177,9 +187,8 @@ class Form extends React.Component {
                 style={{ marginBottom: "-5px", marginRight: "10px" }}
                 size="small"
               />
-
               <Button variant="outlined" size="medium" type="submit">
-                >>
+                Search
               </Button>
             </form>
             <Button

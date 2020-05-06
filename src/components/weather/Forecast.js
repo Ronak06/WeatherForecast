@@ -91,8 +91,10 @@ class Forecast extends React.Component {
         </h1>
         <p>Feels like:</p>
         <h4>
-          {feels}
-          {isCel ? "°C" : "F"}
+          <strong>
+            {feels}
+            {isCel ? "°C" : "F"}
+          </strong>
         </h4>
         <p>Low/High:</p>
         <h4>
@@ -107,7 +109,7 @@ class Forecast extends React.Component {
         </ButtonGroup>
         <br />
         <br />
-        <WeeklyForecast daily={daily} isCel={isCel} />
+        {/* <WeeklyForecast daily={daily} isCel={isCel} /> */}
       </div>
     );
   }
